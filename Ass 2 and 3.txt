@@ -1,0 +1,299 @@
+->PATH=$PATH:$PWD
+chmod 777 <filename>
+<filename>
+
+Q1) Write a shell script named as prog for merge the content of files a.txt, b.txt,and c.txt sort them and save the result in a file called result and display the sorted
+output on the screen
+
+-> sort -n a.txt b.txt c.txt
+
+Q2) Write a shell script named as systeminfo that will display the information about the login name of the user, name of the Unix system used by the user, type of the SHELL, Path of current working directory of the user and list of file contain in
+current working directory
+
+-> echo "log-name: $LOGNAME";
+echo "user-name: `uname`";
+echo "OSTYPE: $OSTYPE";
+echo "shell: $SHELL";
+echo "working diretory: $PWD";
+echo "all files: `ls`";
+
+Q3)  Write a shell script named as dtcal for displaying both the system date and calendar for specific month, say march 2022, in the given format:- 
+Date : specific date Calender : current calendar
+
+-> echo -e "date: `date`";
+echo -e "Calender:\n`cal march 2022`";
+
+Q4) Write a shell script named as nvwc which will display the filename and linecount, wordcount and char count of the file dtcal in the following format
+
+-> echo -e "FileName: dtcal";
+echo -e "Line count: `wc -l <dtcal`";
+echo -e "Word count: `wc -w <dtcal`";
+echo -e "Char count: `wc -c <dtcal`";
+
+Q5) Write a shell script named as nvwc2 which will display the filename and linecount, word count and char count of any file given as argument to nvwc2 in the following format:
+filename linecount wordcount charcount 
+
+-> echo -e "Filename\tlinecount\twordcount\tcharcount";
+echo -e "$1\t\t`wc -l <$1`\t\t`wc -w <$1`\t\t`wc -c <$1`";
+
+Q6) Write a shell script named as darg to display the total number of command line arguments along with the first two arguments.
+-Modify the script to display all the arguments.
+
+-> echo -e "1st argument\t: $1";
+echo -e "2st argument\t: $2";
+echo -e "All arguments\t: $@";
+echo -e "Total no. arguments\t: $#";
+echo -e "Last arguments\t: ${*:$#}";
+
+Q7) Write a shell script named as ndisp that will take three command line arguments specifying the value of n, m and a filename and display the first n
+number of lines and last m number of lines of the file given as argument. 
+
+-> echo -e "First $1 lines :\n `head -$1 $3`"; 
+echo -e "Last $2 lines :\n `tail -$2 $3`";
+echo -e "Total lines :\n `wc -l <$3`";  
+
+Q1) Write a shell script iaop to perform integer arithmetic on two numbers, where the value of the two numbers will be given during runtime
+
+-> echo "enter value of a";
+read a;
+echo "a=$a";
+echo "enter value of b";
+read b;
+echo "b=$b";
+echo "$a + $b = `expr $a + $b`";
+echo "$a - $b = `expr $a - $b`";
+echo "$a x $b = `expr $a \* $b`";
+echo "$a / $b = `expr $a / $b`";
+echo "$a % $b = `expr $a % $b`";
+ 
+Q2) Write a shell script faop to perform floating point arithmetic on two numbers, where the value of the two numbers will be given during runtime.
+
+-> echo "enter value of a";
+read a;
+echo "a=$a";
+echo "enter value of b";
+read b;
+echo "b=$b";
+echo "$a + $b = `echo $a + $b | bc`";
+echo "$a - $b = `echo $a - $b | bc`";
+echo "$a x $b = `echo $a \* $b | bc`";
+echo "$a / $b = `echo "scale=2; $a / $b " | bc`";
+echo "$a % $b = `echo $a % $b | bc`";
+
+Q3) Ramesh’s basic salary is input through the keyboard. His dearness allowance is 40% of basic salary, and house rent allowance is 20% of basic salary. Write a program to calculate his
+gross salary
+
+-> echo "Enter basic salary";
+read s;
+echo "Basic salary = $s";
+da=`echo "scale=2; $s * 0.4 " | bc`;
+ra=`echo "scale=2; $s * 0.2 " | bc`;
+echo "Dearness allowance = $da";
+echo "Rent allowance = $ra";
+gross=`echo "scale=2; $s + $da + $ra" | bc`;
+echo "Gross Salary = $gross";
+
+Q4) If a five digit number is input given through the keyboard during runtime, write a program to calculate the sum of its digits.
+
+-> echo "Enter a 5 digit No."
+read num;
+digit1=`expr $num % 10 `;
+num1=`expr $num / 10 `;
+digit2=`expr $num1 % 10 `;
+num2=`expr $num1 / 10 `;
+digit3=`expr $num2 % 10 `;
+num3=`expr $num2 / 10 `;
+digit4=`expr $num3 % 10 `;
+num4=`expr $num3 / 10 `;
+digit5=`expr $num4 % 10 `;
+sum=`expr $digit1 + $digit2 + $digit3 + $digit4 + $digit5 `;
+echo "sum= $sum";
+
+Q5) If cost price and selling price of an item is input through the keyboard, write a program to determine whether the seller has made profit or incurred loss. Also determine how much
+profit was made or loss incurred.
+
+-> echo "enter selling price";
+read selling;
+echo "enter cost price";
+read cost;
+if [ $selling -gt $cost ]
+then
+profit=`echo $selling - $cost | bc`;
+echo "Seller made $profit profit.";
+else
+loss=`echo $cost - $selling | bc`;
+echo "Seller incurred $loss loss.";
+fi
+
+Q6) Write a shell script which receives any year from the keyboard and determines, whether the year is a leap year or not. If no argument is supplied the current year should be assumed.
+
+-> if test $# -eq 0
+then
+year=`date +%Y`;
+mod4=`echo $year % 4 | bc`;
+mod100=`echo $year % 100 | bc`;
+mod400=`echo $year % 400 | bc`;
+if [ $mod400 -eq 0 -o $mod4 -eq 0 -a $mod100 -ne 0 ]
+then 
+echo "$year is a leap year";
+else
+echo "$year not a leap year";
+fi
+else
+year=$1;
+mod4=`echo $year % 4 | bc`;
+mod100=`echo $year % 100 | bc`;
+mod400=`echo $year % 400 | bc`;
+if [ $mod400 -eq 0 -o $mod4 -eq 0 -a $mod100 -ne 0 ]
+then 
+echo "$year is a leap year";
+else
+echo "$year not a leap year";
+fi
+fi
+
+Q7) Write a shell script allow that will display a message to enter internal mark and percentage in attendance, if the entered mark is greater than equal to 20 and entered percentage in
+attendance is greater that equal to 75 then display the message Allowed for Semester otherwise display the message Not allowed.
+
+-> echo "enter internal mark :";
+read mark
+echo "percentage in attendance :";
+read percentage
+if [ $mark -ge 20 -a $percentage -ge 75 ]
+then
+echo "Allowed for Semester";
+else
+echo "Not allowed";
+fi
+
+Q8) Write a shell script small3 that will compare three numbers passed as command line arguments and display the smallest one.
+
+-> if [ $1 -lt $2 -a $1 -lt $3 ]
+then 
+echo "$1 is smallest";
+else
+if [ $2 -lt $1 -a $2 -lt $3 ]
+then
+echo "$2 is smallest";
+else
+echo "$3 is smallest";
+fi
+fi
+
+Q9) Write a shell script check_char which will display one message to enter a character andaccording to the character entered it will display appropriate message from the following
+options:
+ You entered a lower case alphabet
+ You entered an upper case alphabet.
+ You have entered a digit.
+ You have entered a special symbol.
+ You have entered more than one character
+
+-> echo "Enter a char : ";
+read ch
+case $ch in
+[a-z])
+echo "you entered Lower case Char";
+;;
+[A-Z])
+echo "you entered upper case Char";
+;;
+[0-9])
+echo "you entered a number";
+;;
+?)
+echo "you entered a special char";
+;;
+*)
+echo "you entered a string";
+;;
+esac
+
+Q10) Write a shell script class_time which will display one message to enter a day and according to the day entered it will display the DOS class time along with the room information or the
+message “No class on day_name” or “Holiday” for Sunday
+
+-> echo "enter a day";
+read day
+case $day in
+monday)
+echo "No class on $day";
+;;
+tuesday)
+echo "Time 2pm room c08";
+;;
+wednesday)
+echo "Time 4pm room c24";
+;;
+thrusday)
+echo "No class on $day";
+;;
+friday)
+echo "Time 4pm room c24";
+;;
+saturday)
+echo "No class on $day";
+;;
+sunday)
+echo "Holiday";
+esac
+
+Q11) Write a shell script filechk that will take two file names as command line arguments, and check whether the content of two files are same or not . If contents of two files are same,
+then it will display the message: Files filename1 and filename2 have same content. then delete the second file and display the message: So filename2 is deleted. Otherwise display
+the message: Files filename1 and filename2 have different content.
+
+-> if cmp $1 $2
+then
+echo "Files $1 and $2 have same content.";
+rm $2;
+echo "So $2 is deleted";
+else
+echo "Files $1 and $2 have different content.";
+fi
+
+Q12) Write a shell script calculator that will take three command line arguments, where the first argument will specify the first operand, second argument will specify the operator and the
+third argument will specify the second operand and display the output of the arithmetic operation specified in the following format: op1 operator op2 = result .
+If the arguments will be passed in any other sequence, it will display the message: 
+
+-> if [ "$#" -ne 3 ]; then
+    echo "Invalid input"
+    exit 1
+fi
+
+op1=$1
+operator=$2
+op2=$3
+
+case $operator in
+
++) 
+result=$(echo "$op1 + $op2" | bc) 
+;;
+
+-) 
+result=$(echo "$op1 - $op2" | bc) 
+;;
+
+x) 
+result=$(echo "$op1 * $op2" | bc) 
+;;
+
+/) 
+if [ "$op2" -eq 0 ]; then
+echo "Division by zero error"
+fi
+result=$(echo "scale=2; $op1 / $op2" | bc) 
+;;
+
+%) 
+result=$(echo "$op1 % $op2" | bc) 
+;;
+
+^) 
+result=$(echo "$op1 ^ $op2" | bc) 
+;;
+
+*) 
+echo "Invalid input"
+;;
+esac
+
+echo "$op1 $operator $op2 = $result"
