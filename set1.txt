@@ -70,36 +70,37 @@ Percentage between 40 and 49- Third division
 Percentage less than 40 - Fail
 Write a shell program to calculate the division obtained by the student. (4 Marks)
 
--> int main() {
- int marks[5], total = 0;
- float average;
- int i;
- // Input marks for 5 students
- printf("Enter marks of 5 students:\n");
- for (i = 0; i < 5; i++) {
- printf("Student %d: ", i + 1);
- scanf("%d", &marks[i]);
- // Check for invalid marks
- if (marks[i] < 0 || marks[i] > 100) {
- printf("Invalid marks! Please enter marks between 0 and 100.\n");
- return 1; // Exit with error code
- }
- total += marks[i];
- }
- // Calculate average
- average = total / 5.0;
- // Determine division
- printf("\nAverage Marks: %.2f\n", average);
- if (average >= 60) {
- printf("Division: First\n");
- } else if (average >= 50) {
- printf("Division: Second\n");
- } else if (average >= 40) {
- printf("Division: Third\n");
- } else {
- printf("Division: Fail\n");
- }
- return 0;
+->
+#!/bin/bash
+
+# Input marks for 5 subjects
+echo "Enter marks for Subject 1:"
+read marks1
+echo "Enter marks for Subject 2:"
+read marks2
+echo "Enter marks for Subject 3:"
+read marks3
+echo "Enter marks for Subject 4:"
+read marks4
+echo "Enter marks for Subject 5:"
+read marks5
+
+# Calculate total marks
+total_marks=$((marks1 + marks2 + marks3 + marks4 + marks5))
+
+# Calculate percentage
+percentage=$((total_marks / 5))
+
+# Determine division based on percentage
+if [ $percentage -ge 60 ]; then
+    echo "First Division"
+elif [ $percentage -ge 50 ] && [ $percentage -lt 60 ]; then
+    echo "Second Division"
+elif [ $percentage -ge 40 ] && [ $percentage -lt 50 ]; then
+    echo "Third Division"
+else
+    echo "Fail"
+fi
 
 Q4) Write a program that creates three threads: Thread A, Thread B, and Thread C. The threads must print numbers in the following sequence: A1, B2, C3, A4, B5, C6... upto 20 numbers.
 Thread A prints A1, A4, A7, ...
